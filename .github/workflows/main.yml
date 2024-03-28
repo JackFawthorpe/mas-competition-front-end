@@ -1,0 +1,21 @@
+name: mas-competition-frontend-deployment
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - run: rm -rf '/var/mas/staging/'
+      - uses: actions/checkout@v4
+        with:
+          path: './staging'
+      - run: cd './mas-competition-frontend-staging'
+      - run: npm ci
+      - run: npm run build
+      - run: cp -r build/* '/var/mas/staging/'
+      
+      
