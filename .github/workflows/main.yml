@@ -15,7 +15,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '18'
-      - run: npm ci
+      - run: npm ci --force
       - run: npm run build
       - run: rm -rf '/var/mas/staging/'
       - run: cp -r build/* '/var/mas/staging/'
