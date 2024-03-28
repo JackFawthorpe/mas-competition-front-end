@@ -1,5 +1,4 @@
 import { Box, Button, FormControl, FormLabel, TextField } from "@mui/material";
-import { Theme, useTheme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import { SubmitHandler, useForm } from "react-hook-form";
 import FormSubmissionFooter from "../components/FormSubmissionFooter";
@@ -10,7 +9,7 @@ type Inputs = {
   password: string
 };
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   sidePanel: {
     background: 'radial-gradient(circle at 10% 20%, rgb(252, 251, 121) 0%, #ffb74d 90%)',
     height: '100%',
@@ -18,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     boxShadow: '3px 0px 5px rgba(0, 0, 0, 0.25)'
   },
   corePanel: {
-    gap: theme.spacing(2),
+    gap: '16px',
     width: '10%',
     minWidth: '400px',
     padding: '0px 7.5%',
@@ -31,8 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const LoginPage = () => {
-  const theme = useTheme();
-  const classes = useStyles(theme);
+  const classes = useStyles();
 
   const {
     register,
