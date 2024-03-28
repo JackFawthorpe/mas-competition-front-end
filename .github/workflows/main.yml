@@ -25,6 +25,6 @@ jobs:
 
       - name: Prepare staging directory
         run: |
-          rm -rf '/var/mas/staging/'
-          mkdir '/var/mas/staging/'
-          cp -r build/* '/var/mas/staging/'
+          echo ${{ secrets.USERPWD }} | sudo -S rm -rf '/var/mas/staging/'
+          echo ${{ secrets.USERPWD }} | sudo -Smkdir '/var/mas/staging/'
+          echo ${{ secrets.USERPWD }} | sudo -Scp -r build/* '/var/mas/staging/'
