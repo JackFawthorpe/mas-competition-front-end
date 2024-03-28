@@ -48,7 +48,7 @@ const LoginPage = () => {
       <Box className={classes.corePanel}>
       
         <FormControl>
-            <FormLabel>Email:</FormLabel>
+            <FormLabel>Hello world! Email:</FormLabel>
             <TextField type="email" {...register("email")}/>
           </FormControl>
         
