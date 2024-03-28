@@ -1,20 +1,20 @@
-import { Button, ThemeProvider } from '@mui/material';
-import React from 'react';
-import { API } from './apis/API';
-import theme from './theme';
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Login from "./apis/pages/Login";
+import Home from "./apis/pages/Home";
+import PageContainer from "./apis/components/PageContainer";
 
 function App() {
 
-  const handleClick = async () => {
-    console.log(await API.getHello());
-  }
+  const isLoggedIn = false;
 
   return (
-    <div className="App">
-      <ThemeProvider theme={theme}>
-        <Button onClick={handleClick} variant="contained">Hello</Button>
-      </ThemeProvider>
-    </div>
+    <PageContainer>
+        <BrowserRouter>
+          <Routes>
+            <Route path={"/"} element={isLoggedIn ? <Home/> : <Login/>}/>
+          </Routes>
+        </BrowserRouter>
+    </PageContainer>
   );
 }
 
