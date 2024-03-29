@@ -4,9 +4,9 @@ import axios from "axios";
 let baseURL = "http://localhost:4300/api/v1";
 
 if (process.env.NODE_ENV === "production") {
-    baseURL = "https://localhost:4000/api/v1";
+    baseURL = "http://132.181.18.82/api/v1";
   } else if (process.env.NODE_ENV === "staging") {
-    baseURL = "https://localhost:4500/test/api/v1";
+    baseURL = "http://132.181.18.82/test/api/v1";
   }
   
 export const api = axios.create({
