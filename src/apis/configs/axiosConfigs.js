@@ -6,7 +6,7 @@ let baseURL = "http://localhost:4300/api/v1";
 if (process.env.NODE_ENV === "production") {
     baseURL = "http://132.181.18.82/api/v1";
   } else if (process.env.NODE_ENV === "staging") {
-    baseURL = "http://132.181.18.82/test/api/v1";
+    baseURL = "http://132.181.18.82/test/test/api/v1";
   }
   
 export const api = axios.create({
