@@ -1,16 +1,17 @@
-import { api } from "./configs/axiosConfigs"
-import { defineCancelApiObject } from "./configs/axiosUtils"
+import { api } from "./configs/axiosConfigs";
 
 export const API = {
-    getHello: async function (cancel = false) {
-        const response = await api.request({
-            url: `/hello`,
-            method: "GET",
-            signal: cancel ? cancelApiObject[this.get.name].handleRequestCancellation().signal : undefined
-        })
+    postLogin: async (user: UserLogin): Promise<User> => {
+        const formData = new FormData();
+        formData.append('email', user.email);
+        formData.append('password', user.password);
 
+        const response = await api.post<User>('/login', formData);
+    
         return response.data
     },
-}
 
-const cancelApiObject = defineCancelApiObject(API)          
+    postLogout: async () => {
+        await api.post('/logout');
+    }
+}

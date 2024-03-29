@@ -1,17 +1,25 @@
+import makeStyles from '@mui/styles/makeStyles';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Navigation from "./components/Navigation";
 import PageContainer from "./components/PageContainer";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
+
+const useStyles = makeStyles(() => ({
+  appContainer: {
+    flexDirection: 'column',
+  },
+}))
 
 function App() {
 
-  const isLoggedIn = false;
+  const classes = useStyles()
 
   return (
-    <PageContainer>
+    <PageContainer className={classes.appContainer}>
+        <Navigation/>
         <BrowserRouter basename={process.env.PUBLIC_URL}>
           <Routes>
-            <Route path={"/"} element={isLoggedIn ? <Home/> : <Login/>}/>
+            <Route path={"/"} element={<Home/>}/>
           </Routes>
         </BrowserRouter>
     </PageContainer>

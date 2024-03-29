@@ -6,12 +6,15 @@ import '@fontsource/roboto/700.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import { AuthContextProvider } from './context/AuthContext';
 import theme from './theme';
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
+    <AuthContextProvider>
       <App />
+    </AuthContextProvider>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -16,6 +16,22 @@ export default createTheme({
         },
       },
     },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          '&.Mui-selected': {
+            color: 'black'
+          }
+        }
+      }
+    },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          margin: '2px 0px 0px 2px'
+        },
+      },
+    },
     MuiOutlinedInput: {
         styleOverrides: {
             input: {

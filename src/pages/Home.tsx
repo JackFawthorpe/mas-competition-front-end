@@ -1,7 +1,10 @@
-import {Container} from "@mui/material";
+import { Container } from "@mui/material";
 
 const HomePage = () => {
-  return <Container></Container>
+  return (
+  <Container>
+  </Container>
+  )
 }
 
 export default HomePage;

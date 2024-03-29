@@ -1,13 +1,13 @@
-import { Box, Button, FormControl, FormLabel, TextField } from "@mui/material";
-import makeStyles from '@mui/styles/makeStyles';
-import { SubmitHandler, useForm } from "react-hook-form";
-import FormSubmissionFooter from "../components/FormSubmissionFooter";
-import PageContainer from "../components/PageContainer";
-
-type Inputs = {
-  email: string
-  password: string
-};
+import { yupResolver } from "@hookform/resolvers/yup"
+import { Box, Button, FormControl, FormLabel, TextField } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
+import { useContext } from 'react'
+import { type SubmitHandler, useForm } from 'react-hook-form'
+import * as yup from "yup"
+import { API } from '../apis/API'
+import FormSubmissionFooter from '../components/FormSubmissionFooter'
+import PageContainer from '../components/PageContainer'
+import { AuthContext } from '../context/AuthContext'
 
 const useStyles = makeStyles(() => ({
   sidePanel: {
@@ -27,30 +27,58 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'center',
     flexDirection: 'column'
   }
-}));
+}))
+
+const schema = yup.object({
+  email: yup.string().required(),
+  password: yup.string().required()
+}).required();
+
 
 const LoginPage = () => {
-  const classes = useStyles();
+  const classes = useStyles()
+
+  const { setUser } = useContext(AuthContext)
 
   const {
     register,
     handleSubmit,
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+    formState: {errors},
+    setError
+  } = useForm<UserLogin>({
+    resolver: yupResolver(schema),
+  })
+  const onSubmit: SubmitHandler<UserLogin> = async (data) => {
+    try {
+      const user = await API.postLogin(data);
+      setUser(user);
+    } catch {
+      setError("password", {message: "Email or password is incorrect"});
+      setError("email", {message: "Email or password is incorrect"});
+    }
+  }
 
   return (
     <PageContainer>
       <Box className={classes.sidePanel}/>
       <Box className={classes.corePanel}>
-      
+
         <FormControl>
             <FormLabel>Email:</FormLabel>
-            <TextField type="email" {...register("email")}/>
+            <TextField 
+            type="email" 
+            error={!!errors.email}
+            helperText={errors.email?.message}
+            {...register('email')}/>
           </FormControl>
-        
+
           <FormControl>
             <FormLabel>Password:</FormLabel>
-            <TextField type="password" {...register("password")}/>
+            <TextField 
+            type="password"
+            error={!!errors.password}
+            helperText={errors.password?.message}
+             {...register('password')}/>
           </FormControl>
 
           <FormSubmissionFooter>
