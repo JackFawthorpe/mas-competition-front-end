@@ -1,6 +1,7 @@
 import { Box, Button, Tab, Tabs } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
 import { useContext, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { API } from "../apis/API";
 import { AuthContext } from "../context/AuthContext";
 
@@ -34,12 +35,14 @@ const Navigation = () => {
         setValue(newValue);
       };
 
+    const navigate = useNavigate();
+
     return (
         <Box className={classes.navigationBar}>
             <Tabs value={value} onChange={handleChange} >
-                    <Tab label="Agent Leaderboard" />
-                    <Tab label="Team Leaderboard"/>
-                    <Tab label="Agent Submission"/>
+                    <Tab label="Agent Leaderboard" onClick={() => {navigate("/agents")}}/>
+                    <Tab label="Team Leaderboard" onClick={() => {navigate("/teams")}}/>
+                    <Tab label="Agent Submission" onClick={() => {navigate("/agent-submission")}}/>
                 </Tabs>
 
                 <Box sx={{alignSelf: 'center', padding: '5px'}}>

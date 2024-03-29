@@ -16,8 +16,8 @@ function App() {
 
   return (
     <PageContainer className={classes.appContainer}>
-        <Navigation/>
         <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <Navigation/>
           <Routes>
             <Route path={"/"} element={<Home/>}/>
           </Routes>
