@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import LoginPage from '../pages/Login'
 
-export const AuthContext = React.createContext({
+export const AuthContext = React.createContext<{user: User, setUser: any}>({
   user: null,
-  setUser: (user: User) => {}
+  setUser: null
 })
 
 // Context for authentication of the user
@@ -12,11 +12,21 @@ export const AuthContextProvider = (props) => {
 
   const setUser = (user) => {
     setState({...state, user: user})
-    localStorage.setItem('user', JSON.stringify(state.user));
+    if (user != null) {
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('user');
+    }
   }
   
+  const loadUser = () => {
+    return localStorage.getItem('user') != null
+    ? JSON.parse(localStorage.getItem('user'))
+    : null;
+  }
+
   const initState = {
-    user: localStorage.getItem('user'),
+    user: loadUser(),
     setUser: setUser
   } 
 

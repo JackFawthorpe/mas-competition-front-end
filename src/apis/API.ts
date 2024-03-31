@@ -7,11 +7,14 @@ export const API = {
         formData.append('password', user.password);
 
         const response = await api.post<User>('/login', formData);
-    
         return response.data
     },
 
     postLogout: async () => {
         await api.post('/logout');
+    },
+
+    postChangePassword: async(passwordDetails: ChangePasswordForm, userid: string) => {
+        await api.post(`/users/${userid}/password`, passwordDetails);
     }
 }

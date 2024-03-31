@@ -8,7 +8,8 @@ if (process.env.NODE_ENV === "production") {
 }
   
 export const api = axios.create({
-baseURL: baseURL
+    baseURL,
+    withCredentials: true,
 });
 
 // defining a custom error handler for all APIs

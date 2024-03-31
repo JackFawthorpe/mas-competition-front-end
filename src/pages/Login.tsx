@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
     boxShadow: '3px 0px 5px rgba(0, 0, 0, 0.25)'
   },
   corePanel: {
-    gap: '16px',
+    gap: '24px',
     width: '10%',
     minWidth: '400px',
     padding: '0px 7.5%',
@@ -61,7 +61,7 @@ const LoginPage = () => {
   return (
     <PageContainer>
       <Box className={classes.sidePanel}/>
-      <Box className={classes.corePanel}>
+      <Box className={classes.corePanel} component="form">
 
         <FormControl>
             <FormLabel>Email:</FormLabel>
@@ -82,7 +82,7 @@ const LoginPage = () => {
           </FormControl>
 
           <FormSubmissionFooter>
-            <Button variant="contained" onClick={handleSubmit(onSubmit)}>Sign in</Button>
+            <Button variant="contained" type="submit" onClick={handleSubmit(onSubmit)}>Sign in</Button>
           </FormSubmissionFooter>
       </Box>
     </PageContainer>

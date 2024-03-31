@@ -1,9 +1,11 @@
-import { Box, Button, Tab, Tabs } from "@mui/material";
+import SettingsIcon from '@mui/icons-material/Settings';
+import { Box, IconButton, MenuItem, Tab, Tabs } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
 import { useContext, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { API } from "../apis/API";
 import { AuthContext } from "../context/AuthContext";
+import DropdownMenu from './DropdownMenu';
 
 const useStyles = makeStyles(() => ({
     navigationBar: {
@@ -29,25 +31,37 @@ const Navigation = () => {
       }
     }
 
-    const [value, setValue] = useState(0);
+    const handleChangePassword = () => {
+      handleTabChange(null, null);
+       navigate("/change-password");
+    }
 
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
+    const [tabValue, setTabValue] = useState(0);
+
+    const handleTabChange = (_: React.SyntheticEvent, tabValue: number) => {
+        setTabValue(tabValue);
       };
 
     const navigate = useNavigate();
 
     return (
         <Box className={classes.navigationBar}>
-            <Tabs value={value} onChange={handleChange} >
+            <Tabs value={tabValue} onChange={handleTabChange} >
                     <Tab label="Agent Leaderboard" onClick={() => {navigate("/agents")}}/>
                     <Tab label="Team Leaderboard" onClick={() => {navigate("/teams")}}/>
                     <Tab label="Agent Submission" onClick={() => {navigate("/agent-submission")}}/>
                 </Tabs>
 
-                <Box sx={{alignSelf: 'center', padding: '5px'}}>
-                    <Button variant="contained" onClick={handleLogout}>Logout</Button>
-                </Box>
+                <DropdownMenu
+                  element={
+                    <IconButton>
+                      <SettingsIcon />
+                    </IconButton>
+                  }
+                  items={[
+                    <MenuItem key="Logout button" onClick={handleLogout}>Logout</MenuItem>,
+                    <MenuItem key="Change password button" onClick={handleChangePassword}>Change Password</MenuItem>
+                  ]}/>
         </Box>
     )
 }

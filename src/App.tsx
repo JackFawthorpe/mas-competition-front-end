@@ -2,6 +2,8 @@ import makeStyles from '@mui/styles/makeStyles';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import PageContainer from "./components/PageContainer";
+import SnackbarProvider from './context/SnackbarProvider';
+import ChangePasswordPage from './pages/ChangePassword';
 import Home from "./pages/Home";
 
 const useStyles = makeStyles(() => ({
@@ -16,12 +18,16 @@ function App() {
 
   return (
     <PageContainer className={classes.appContainer}>
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <SnackbarProvider>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Navigation/>
-          <Routes>
-            <Route path={"/"} element={<Home/>}/>
-          </Routes>
-        </BrowserRouter>
+        <Routes>
+          <Route path={"/change-password"} element={<ChangePasswordPage/>}/>
+          <Route path={"/"} element={<Home/>}/>
+        </Routes>
+      </BrowserRouter>
+    </SnackbarProvider>
+        
     </PageContainer>
   );
 }
