@@ -6,14 +6,17 @@ export const AuthContext = React.createContext({
   setUser: (user: User) => {}
 })
 
+// Context for authentication of the user
+// User data is stored in localstorage
 export const AuthContextProvider = (props) => {
 
   const setUser = (user) => {
     setState({...state, user: user})
+    localStorage.setItem('user', JSON.stringify(state.user));
   }
-
+  
   const initState = {
-    user: null,
+    user: localStorage.getItem('user'),
     setUser: setUser
   } 
 
