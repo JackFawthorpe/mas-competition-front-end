@@ -28,7 +28,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build:staging": "cross-env NODE_ENV=production PUBLIC_URL=/test react-scripts build",
-    "build:production": "cross-env NODE_ENV=production react-scripts build"
+    "build:production": "cross-env NODE_ENV=production PUBLIC_URL=/prod react-scripts build"
   },
   "eslintConfig": {
     "extends": [

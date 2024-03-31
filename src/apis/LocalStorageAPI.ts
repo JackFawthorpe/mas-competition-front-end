@@ -1,10 +1,8 @@
 
 let prefix = ''
 
-console.log(process.env.PUBLIC_URL);
-
 if (process.env.PUBLIC_URL !== "") {
-  prefix = 'staging';
+  prefix = process.env.PUBLIC_URL.replace("/", "");
 }
 
 const getKey = (key) => `${prefix}${prefix !== "" ? '-': ''}${key}`
