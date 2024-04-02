@@ -2,7 +2,7 @@
 type User = {
     id: string; // UUID identifier
     email: string;
-    teamid?: string;
+    teamId?: string; // UUID identifier
 };
 
 type UserLogin = {

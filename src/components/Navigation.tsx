@@ -59,8 +59,8 @@ const Navigation = () => {
                     </IconButton>
                   }
                   items={[
-                    <MenuItem key="Logout button" onClick={handleLogout}>Logout</MenuItem>,
-                    <MenuItem key="Change password button" onClick={handleChangePassword}>Change Password</MenuItem>
+                    <MenuItem key="Change password button" onClick={handleChangePassword}>Change Password</MenuItem>,
+                    <MenuItem key="Logout button" onClick={handleLogout}>Logout</MenuItem>
                   ]}/>
         </Box>
     )

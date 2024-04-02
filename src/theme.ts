@@ -16,6 +16,15 @@ export default createTheme({
         },
       },
     },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          '&.Mui-focused': {
+            color: 'rgba(0, 0, 0, 0.6)',
+          },
+        },
+      },
+    },
     MuiTab: {
       styleOverrides: {
         root: {
@@ -33,11 +42,14 @@ export default createTheme({
       },
     },
     MuiOutlinedInput: {
-        styleOverrides: {
-            input: {
-                padding: '8px'
-            }
-        }
-    }
+      styleOverrides: {
+          input: {
+              padding: '8px',
+              '&.Mui-disabled': {
+                WebkitTextFillColor: 'black'
+              }
+          },
+      },
+    },
   },
 });

@@ -20,7 +20,6 @@ const DropdownMenu = (props: DropdownProps) => {
       };
   
       const handleCloseMenu = () => {
-        console.log("Menu closed");
         setAnchorEl(null);
       };  
   

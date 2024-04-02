@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import PageContainer from "./components/PageContainer";
 import SnackbarProvider from './context/SnackbarProvider';
+import AgentSubmission from './pages/AgentSubmission';
 import ChangePasswordPage from './pages/ChangePassword';
 import Home from "./pages/Home";
 
@@ -23,6 +24,7 @@ function App() {
         <Navigation/>
         <Routes>
           <Route path={"/change-password"} element={<ChangePasswordPage/>}/>
+          <Route path={"/agent-submission"} element={<AgentSubmission/>}/>
           <Route path={"/"} element={<Home/>}/>
         </Routes>
       </BrowserRouter>

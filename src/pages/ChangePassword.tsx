@@ -1,30 +1,17 @@
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Button, Card, FormControl, FormLabel, TextField } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
+import { Button, FormControl, TextField } from '@mui/material'
 import { useContext } from "react"
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from "react-router-dom"
 import * as yup from "yup"
 import { API } from "../apis/API"
 import Backdrop from '../components/Backdrop'
+import FormCard from "../components/FormCard"
+import FormLabel from "../components/FormLabel"
 import FormSubmissionFooter from '../components/FormSubmissionFooter'
 import PageContainer from '../components/PageContainer'
 import { AuthContext } from "../context/AuthContext"
 import { SnackbarContext } from "../context/SnackbarProvider"
-
-
-const useStyles = makeStyles(() => ({
-  formContainer: {
-		margin: '32px',
-		padding: '24px',
-		display: 'flex',
-		flexDirection: 'column',
-		height: 'fit-content',
-		gap: '24px',
-		width: '350px',
-		borderRadius: '20px'
-	}
-}))
 
 const schema = yup.object({
   currentPassword: yup.string()
@@ -45,7 +32,6 @@ const schema = yup.object({
 
 
 const ChangePasswordPage = () => {
-	const classes = useStyles();
 
 	const { user } = useContext(AuthContext);
 
@@ -76,9 +62,9 @@ const ChangePasswordPage = () => {
   return (
     <PageContainer>
       <Backdrop>
-				<Card className={classes.formContainer} component="form">
+				<FormCard component="form">
 						<FormControl>
-							<FormLabel>Current Password:</FormLabel>
+							<FormLabel title={"Current Password"}/>
 							<TextField 
 							type="password"
 							error={!!errors.currentPassword}
@@ -87,7 +73,7 @@ const ChangePasswordPage = () => {
 						</FormControl>
 
 						<FormControl>
-							<FormLabel>New Password:</FormLabel>
+							<FormLabel title={"New Password"}/>
 							<TextField 
 							type="password"
 							error={!!errors.newPassword}
@@ -96,7 +82,7 @@ const ChangePasswordPage = () => {
 						</FormControl>
 
 						<FormControl>
-							<FormLabel>Confirm Password:</FormLabel>
+							<FormLabel title={"Confirm Password"}/>
 							<TextField 
 							type="password"
 							error={!!errors.confirmPassword}
@@ -107,7 +93,7 @@ const ChangePasswordPage = () => {
 						<FormSubmissionFooter>
 							<Button variant="contained" type="submit" onClick={handleSubmit(onSubmit)}>Submit</Button>
 						</FormSubmissionFooter>
-				</Card>
+				</FormCard>
 			</Backdrop>
     </PageContainer>
   )
