@@ -33,6 +33,17 @@ const AgentSubmission = () => {
     );
   };
 
+  const [file, setFile] = useState(null);
+
+  const handleChooseFile = (event) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+  };
+
+  const handleButtonClick = () => {
+    document.getElementById('fileInput').click();
+  };
+
   return (
     <PageContainer>
       <Backdrop>
@@ -41,9 +52,15 @@ const AgentSubmission = () => {
         <FormControl>
             <FormLabel title={"Upload your agent"}/>
             <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-              <TextField sx={{flexGrow: '1', paddingRight: '4px', height: '100%'}} disabled={true}/>
+              <TextField sx={{flexGrow: '1', paddingRight: '4px', height: '100%'}} disabled={true} value={file?.name ?? ''}/>
               <Box>
-                <Button variant="contained">
+                <input
+                  type="file"
+                  id="fileInput"
+                  style={{ display: 'none' }}
+                  onChange={handleChooseFile}
+                />
+                <Button variant="contained" sx={{height: 'calc(1.4375em + 16px)'}} onClick={handleButtonClick}>
                   Pick agent
                 </Button>
               </Box>
