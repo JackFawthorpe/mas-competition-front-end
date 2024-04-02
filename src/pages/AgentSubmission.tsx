@@ -41,8 +41,8 @@ const AgentSubmission = () => {
 	})
 
   //Agent Selection
-  const [file, setFile] = useState(null);
-  const [fileName, setFileName] = useState<string>("");
+  // const [file, setFile] = useState(null);
+  // const [fileName, setFileName] = useState<string>("");
 
   // const handleChooseFile = (event) => {
   //   const selectedFile = event.target.files[0];
@@ -102,9 +102,9 @@ const AgentSubmission = () => {
               <TextField
                sx={{flexGrow: '1', paddingRight: '4px', height: '100%'}}
                disabled={true} 
-               value={fileName}
-               error={file == null}
-               helperText={file == null ? "You must provide an agent file" : ''}
+              //  value={fileName}
+              //  error={file == null}
+              //  helperText={file == null ? "You must provide an agent file" : ''}
                />
               <Box>
                 <input
