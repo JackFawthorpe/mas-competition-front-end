@@ -16,5 +16,11 @@ export const API = {
 
     postChangePassword: async(passwordDetails: ChangePasswordForm, userid: string) => {
         await api.post(`/users/${userid}/password`, passwordDetails);
+    },
+
+    getTeam: async(teamID: string): Promise<Team> => {
+        const response = await api.get(`/teams/${teamID}`);
+        console.log(`Team: ${JSON.stringify(response.data)}`)
+        return response.data
     }
 }

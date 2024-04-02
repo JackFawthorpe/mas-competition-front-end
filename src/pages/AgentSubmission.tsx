@@ -1,48 +1,96 @@
-import { Box, Button, FormControl, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
-import { useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Box, Button, FormControl, MenuItem, Select, TextField } from "@mui/material";
+import { useContext, useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import { API } from "../apis/API";
 import Backdrop from "../components/Backdrop";
 import FormCard from "../components/FormCard";
 import FormLabel from "../components/FormLabel";
 import FormSubmissionFooter from "../components/FormSubmissionFooter";
 import PageContainer from "../components/PageContainer";
+import { AuthContext } from "../context/AuthContext";
+import { SnackbarContext } from "../context/SnackbarProvider";
 
-
-const dummyNames = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
+const schema = yup.object({
+  designTime: yup.string().matches(/^\d+$/, 'Design number must be a whole number').required("Design time is a required field"),
+  name: yup.string()
+  .matches(/^[a-zA-Z]+$/, "Agent name must be alphabetical")
+  .min(6, "Agent name must be more than 6 characters")
+  .max(64, "An agent name cannot be more than 64 characters")
+  .required("Agent name is a required field"),
+  versionNumber: yup.string().matches(/^\d+$/, 'Version number must be a whole number').required("Version number is a required field"),
+  emails: yup.array()
+  .of(yup.string().required("Email is a required field"))
+  .required("Emails is a required field"),
+  fileName: yup.string().required('Agent file is required'),
+})
 
 const AgentSubmission = () => {
+  const { user } = useContext(AuthContext);
+	const {queueMessage} = useContext(SnackbarContext);
+  const navigate = useNavigate();
 
-  const [otherAuthors, setOtherAuthors] = useState<string[]>([]);
+  const {
+		register,
+		handleSubmit,
+		formState: {errors},
+    setError
+	} = useForm<CreateAgentForm>({
+		resolver: yupResolver(schema),
+	})
 
-  const handleAuthorChange = (event: SelectChangeEvent<typeof otherAuthors>) => {
-    const {
-      target: { value },
-    } = event;
-    setOtherAuthors(
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
-
+  //Agent Selection
   const [file, setFile] = useState(null);
+  const [fileName, setFileName] = useState<string>("");
 
   const handleChooseFile = (event) => {
     const selectedFile = event.target.files[0];
+    setFileName(selectedFile.name);
     setFile(selectedFile);
   };
 
-  const handleButtonClick = () => {
+  const handlePickAgentClick = () => {
     document.getElementById('fileInput').click();
   };
+
+  
+  // Author Selection
+  const [teamMembers, setTeamMembers] = useState<User[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+
+
+  const handleChooseMemberClick = (email: string) => {
+    if (selectedUsers.includes(email)) {
+      setSelectedUsers(prev => prev.filter(userEmail => userEmail !== email))
+    } else {
+      setSelectedUsers(prev => [...prev, email]);
+    }
+  }
+
+  useEffect(() => {
+    const loadTeam = async () => {
+      const team = await API.getTeam(user.teamId);
+      const members = team.users.filter(teamMember => teamMember.id !== user.id);
+      setTeamMembers(members);
+    }
+
+    loadTeam();
+    setSelectedUsers([user.email]);
+  }, [user]);
+
+
+  const onSubmit: SubmitHandler<CreateAgentForm> = async (data) => {
+		try {
+      console.log(JSON.stringify(data));
+			queueMessage("Successfully changed password");
+			// navigate("/home");
+		} catch (error) {
+      console.log(JSON.stringify(error))
+    }
+  }
+
 
   return (
     <PageContainer>
@@ -52,15 +100,20 @@ const AgentSubmission = () => {
         <FormControl>
             <FormLabel title={"Upload your agent"}/>
             <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-              <TextField sx={{flexGrow: '1', paddingRight: '4px', height: '100%'}} disabled={true} value={file?.name ?? ''}/>
+              <TextField
+               sx={{flexGrow: '1', paddingRight: '4px', height: '100%'}}
+               disabled={true} 
+               value={fileName}
+               error={file == null}
+               helperText={file == null ? "You must provide an agent file" : ''}
+               />
               <Box>
                 <input
                   type="file"
                   id="fileInput"
                   style={{ display: 'none' }}
-                  onChange={handleChooseFile}
                 />
-                <Button variant="contained" sx={{height: 'calc(1.4375em + 16px)'}} onClick={handleButtonClick}>
+                <Button variant="contained"onClick={handlePickAgentClick}>
                   Pick agent
                 </Button>
               </Box>
@@ -69,26 +122,35 @@ const AgentSubmission = () => {
 
           <FormControl>
             <FormLabel title={"Agent name"} tooltipMessage={"What is the class name of your agent? etc: DefaultController"}/>
-            <TextField/>
+            <TextField
+               error={!!errors.name}
+               helperText={errors.name?.message}
+               {...register('name')}
+               />
           </FormControl>
   
           <FormControl>
-            <FormLabel title={"Version Number"} tooltipMessage={"What version of the agent is this?"}/>
-            <TextField/>
+            <FormLabel title={"Version number"} tooltipMessage={"What version of the agent is this?"}/>
+            <TextField
+               error={!!errors.versionNumber}
+               helperText={errors.versionNumber?.message}
+               {...register('versionNumber')}
+               />
           </FormControl>
           
           <FormControl>
-            <FormLabel title={"Authors"} tooltipMessage={"Who did you work on this agent with?"}/>
+            <FormLabel title={"Other authors"} tooltipMessage={"Who did you work on this agent with?"}/>
             <Select 
             multiple
-            value={otherAuthors}
-            onChange={handleAuthorChange}>
-            {dummyNames.map((name) => (
+            value={selectedUsers}
+            onChange={() => {}}>
+            {teamMembers.map((teamMember) => (
               <MenuItem
-                key={name}
-                value={name}
+                key={teamMember.id}
+                value={teamMember.email}
+                onClick={() => {handleChooseMemberClick(teamMember.email)}}
               >
-                {name}
+                {teamMember.email}
               </MenuItem>
           ))}
             </Select>
@@ -96,11 +158,14 @@ const AgentSubmission = () => {
           
           <FormControl>
             <FormLabel title={"Design Time"} tooltipMessage={"How many minutes did you spend working on the agent?"}/>
-            <TextField/>
+            <TextField
+               error={!!errors.designTime}
+               helperText={errors.designTime?.message}
+               {...register('designTime')}/>
           </FormControl>
 
           <FormSubmissionFooter>
-            <Button variant="contained">
+            <Button variant="contained" onClick={handleSubmit(onSubmit)}>
               Submit
             </Button>
           </FormSubmissionFooter>

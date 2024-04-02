@@ -1,5 +1,6 @@
 
 import axios from "axios";
+import { LocalStorageAPI } from "../LocalStorageAPI";
 
 let baseURL = "http://localhost:4300/api/v1";
 
@@ -12,13 +13,18 @@ export const api = axios.create({
     withCredentials: true,
 });
 
-// defining a custom error handler for all APIs
-const errorHandler = (error) => {
-    return Promise.reject(error)
-}
-
-// registering the custom error handler to the
-// "api" axios instance
-api.interceptors.response.use(undefined, (error) => {
-    return errorHandler(error)
-})
+api.interceptors.response.use(
+    response => {
+      // If response is successful, return it
+      return response;
+    },
+    error => {
+      // If response status is 302 (redirect) then the account has been logged out
+      if (error.response && error.response.status === 302) {
+        LocalStorageAPI.removeItem('user');
+        window.location.reload();
+      }
+      // Return the error
+      return Promise.reject(error);
+    }
+);
