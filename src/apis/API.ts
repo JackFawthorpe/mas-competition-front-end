@@ -23,4 +23,8 @@ export const API = {
         console.log(`Team: ${JSON.stringify(response.data)}`)
         return response.data
     }
+
+    // postAgent: async(agentDetails: CreateAgentForm, file: File) => {
+    //     const response = await api.post()
+    // }
 }

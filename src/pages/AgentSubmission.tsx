@@ -2,7 +2,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Button, FormControl, MenuItem, Select, TextField } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { API } from "../apis/API";
 import Backdrop from "../components/Backdrop";
@@ -30,13 +29,13 @@ const schema = yup.object({
 const AgentSubmission = () => {
   const { user } = useContext(AuthContext);
 	const {queueMessage} = useContext(SnackbarContext);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const {
 		register,
 		handleSubmit,
 		formState: {errors},
-    setError
+    // setError
 	} = useForm<CreateAgentForm>({
 		resolver: yupResolver(schema),
 	})
@@ -45,11 +44,11 @@ const AgentSubmission = () => {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState<string>("");
 
-  const handleChooseFile = (event) => {
-    const selectedFile = event.target.files[0];
-    setFileName(selectedFile.name);
-    setFile(selectedFile);
-  };
+  // const handleChooseFile = (event) => {
+  //   const selectedFile = event.target.files[0];
+  //   setFileName(selectedFile.name);
+  //   setFile(selectedFile);
+  // };
 
   const handlePickAgentClick = () => {
     document.getElementById('fileInput').click();
