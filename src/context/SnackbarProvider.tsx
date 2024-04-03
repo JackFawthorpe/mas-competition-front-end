@@ -1,7 +1,7 @@
-import { Alert, Snackbar } from "@mui/material";
+import { Alert, AlertProps, Snackbar } from "@mui/material";
 import { createContext, useCallback, useState } from "react";
 
-export const SnackbarContext = createContext<{queueMessage: any}>({
+export const SnackbarContext = createContext<{queueMessage: (message: string, severity?: AlertProps["severity"]) => void}>({
     queueMessage: null
   })
 
@@ -9,9 +9,11 @@ const SnackbarProvider = (props: any) => {
 
 	const [open, setOpen] = useState<boolean>(false);
 	const [message, setMessage] = useState<string>(null);
+  const [severity, setSeverity] = useState<AlertProps["severity"]>("success");
 	
-	const queueMessage = useCallback((message: string) => {
+	const queueMessage = useCallback((message: string, severity: AlertProps["severity"] = 'success') => {
 		setMessage(message);
+    setSeverity(severity);
 		setOpen(true);
 	}, [setMessage, setOpen]);
 
@@ -26,7 +28,7 @@ const SnackbarProvider = (props: any) => {
             anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
         >
           <Alert
-          severity="success"
+          severity={severity}
           variant="filled"
           >
           {message}

@@ -1,5 +1,10 @@
 import { api } from "./configs/axiosConfigs";
 
+type CreateAgentResponse = {
+    nextRound: string,
+    agentID: string
+}
+
 export const API = {
     postLogin: async (user: UserLogin): Promise<User> => {
         const formData = new FormData();
@@ -20,11 +25,23 @@ export const API = {
 
     getTeam: async(teamID: string): Promise<Team> => {
         const response = await api.get(`/teams/${teamID}`);
-        console.log(`Team: ${JSON.stringify(response.data)}`)
         return response.data
-    }
+    },
 
-    // postAgent: async(agentDetails: CreateAgentForm, file: File) => {
-    //     const response = await api.post()
-    // }
+    postAgent: async(data): Promise<CreateAgentResponse> => {
+        
+        const formDataToSend = new FormData();
+        formDataToSend.append('source', data.file);
+
+        const jsonDataBlob = new Blob([JSON.stringify({...data, file: undefined})], { type: 'application/json' });
+        formDataToSend.append('data', jsonDataBlob);
+
+        const response = await api.post('/agents', formDataToSend, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+
+        return response.data;
+    }
 }
