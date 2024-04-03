@@ -18,52 +18,52 @@ const useStyles = makeStyles(() => ({
 
 const Navigation = () => {
 
-    const classes = useStyles();
+  const classes = useStyles();
 
-    const {setUser} = useContext(AuthContext);
+  const {user, setUser} = useContext(AuthContext);
 
-    const handleLogout = () => {
-      try {
-        API.postLogout();
-        setUser(null);
-      } catch {
-        console.log ("error occured logging out");
-      }
+  const handleLogout = () => {
+    try {
+      API.postLogout();
+      setUser(null);
+    } catch {
+      console.log ("error occured logging out");
     }
+  }
 
-    const handleChangePassword = () => {
-      handleTabChange(null, null);
-       navigate("/change-password");
-    }
+  const handleChangePassword = () => {
+    handleTabChange(null, null);
+      navigate("/change-password");
+  }
 
-    const [tabValue, setTabValue] = useState(0);
+  const [tabValue, setTabValue] = useState(0);
 
-    const handleTabChange = (_: React.SyntheticEvent, tabValue: number) => {
-        setTabValue(tabValue);
-      };
+  const handleTabChange = (_: React.SyntheticEvent, tabValue: number) => {
+      setTabValue(tabValue);
+    };
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    return (
-        <Box className={classes.navigationBar}>
-            <Tabs value={tabValue} onChange={handleTabChange} >
-                    <Tab label="Agent Leaderboard" onClick={() => {navigate("/agents")}}/>
-                    <Tab label="Team Leaderboard" onClick={() => {navigate("/teams")}}/>
-                    <Tab label="Agent Submission" onClick={() => {navigate("/agent-submission")}}/>
-                </Tabs>
-
-                <DropdownMenu
-                  element={
-                    <IconButton>
-                      <SettingsIcon />
-                    </IconButton>
-                  }
-                  items={[
-                    <MenuItem key="Change password button" onClick={handleChangePassword}>Change Password</MenuItem>,
-                    <MenuItem key="Logout button" onClick={handleLogout}>Logout</MenuItem>
-                  ]}/>
-        </Box>
-    )
+  return (
+    <Box className={classes.navigationBar}>
+      <Tabs value={tabValue} onChange={handleTabChange} >
+        <Tab label="Agent Leaderboard" onClick={() => {navigate("/agents")}}/>
+        <Tab label="Team Leaderboard" onClick={() => {navigate("/teams")}}/>
+        {user.teamId !== null && <Tab label="Agent Submission" onClick={() => {navigate("/agent-submission")}}/>}
+      </Tabs>
+      
+      <DropdownMenu
+        element={
+          <IconButton>
+            <SettingsIcon />
+          </IconButton>
+        }
+        items={[
+          <MenuItem key="Change password button" onClick={handleChangePassword}>Change Password</MenuItem>,
+          <MenuItem key="Logout button" onClick={handleLogout}>Logout</MenuItem>
+        ]}/>
+    </Box>
+  )
 }
 
 export default Navigation;

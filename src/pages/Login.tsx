@@ -52,6 +52,7 @@ const LoginPage = () => {
     try {
       const user = await API.postLogin(data);
       setUser(user);
+      
     } catch {
       setError("password", {message: "Email or password is incorrect"});
       setError("email", {message: "Email or password is incorrect"});
