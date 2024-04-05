@@ -12,7 +12,7 @@ import { AuthContext } from '../context/AuthContext'
 const useStyles = makeStyles(() => ({
   sidePanel: {
     background: process.env.PUBLIC_URL !== '/prod' ? 'radial-gradient(circle at 10% 20%, rgb(46, 204, 113) 0%, rgb(52, 152, 219) 90%)' : 'radial-gradient(circle at 10% 20%, rgb(252, 251, 121) 0%, #ffb74d 90%)',
-    height: '100%',
+    minHeight: 'calc(100vh - 49px)',
     width: '65%',
     boxShadow: '3px 0px 5px rgba(0, 0, 0, 0.25)'
   },
@@ -20,8 +20,8 @@ const useStyles = makeStyles(() => ({
     gap: '24px',
     width: '10%',
     minWidth: '400px',
-    padding: '0px 7.5%',
-    height: '100%',
+    padding: '0px 7.5%', 
+    minHeight: 'calc(100vh - 49px)',
     display: 'flex',
     alignContent: 'center',
     justifyContent: 'center',
