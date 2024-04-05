@@ -8,7 +8,6 @@ const FormCard = styled(Card)<CardProps>(({ theme }) => ({
   flexDirection: 'column',
   height: 'fit-content',
   gap: '24px',
-  width: '350px',
   borderRadius: '20px'
 }));
 

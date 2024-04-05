@@ -43,5 +43,12 @@ export const API = {
         });
 
         return response.data;
+    },
+
+    getAgents: async(): Promise<AgentListItem[]> => {
+
+        const response = await api.get('/agents');
+
+        return response.data;
     }
 }

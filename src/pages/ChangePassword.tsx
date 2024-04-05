@@ -62,7 +62,7 @@ const ChangePasswordPage = () => {
   return (
     <PageContainer>
       <Backdrop>
-				<FormCard component="form">
+				<FormCard component="form" sx={{width: '350px'}}>
 						<FormControl>
 							<FormLabel title={"Current Password"}/>
 							<TextField 

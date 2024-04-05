@@ -3,9 +3,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import PageContainer from "./components/PageContainer";
 import SnackbarProvider from './context/SnackbarProvider';
+import AgentLeaderboard from './pages/AgentLeaderboard';
 import AgentSubmission from './pages/AgentSubmission';
 import ChangePasswordPage from './pages/ChangePassword';
-import Home from "./pages/Home";
 
 const useStyles = makeStyles(() => ({
   appContainer: {
@@ -25,7 +25,8 @@ function App() {
         <Routes>
           <Route path={"/change-password"} element={<ChangePasswordPage/>}/>
           <Route path={"/agent-submission"} element={<AgentSubmission/>}/>
-          <Route path={"/"} element={<Home/>}/>
+          <Route path={"/agent-leaderboard"} element={<AgentLeaderboard/>}/>
+          <Route path={"/"} element={<AgentLeaderboard/>}/>
         </Routes>
       </BrowserRouter>
     </SnackbarProvider>

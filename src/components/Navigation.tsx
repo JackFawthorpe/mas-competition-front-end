@@ -46,8 +46,8 @@ const Navigation = () => {
 
   return (
     <Box className={classes.navigationBar}>
-      <Tabs value={tabValue} onChange={handleTabChange} >
-        <Tab label="Agent Leaderboard" onClick={() => {navigate("/agents")}}/>
+      <Tabs value={tabValue} onChange={handleTabChange}>
+        <Tab label="Agent Leaderboard" onClick={() => {navigate("/agent-leaderboard")}}/>
         <Tab label="Team Leaderboard" onClick={() => {navigate("/teams")}}/>
         {user.teamId !== null && <Tab label="Agent Submission" onClick={() => {navigate("/agent-submission")}}/>}
       </Tabs>

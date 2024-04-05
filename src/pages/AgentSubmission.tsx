@@ -25,7 +25,7 @@ const schema = yup.object({
   name: yup.string()
   .matches(/^[a-zA-Z]+$/, "Agent name must be alphabetical")
   .min(6, "Agent name must be more than 6 characters")
-  .max(64, "An agent name cannot be more than 64 characters")
+  .max(32, "An agent name cannot be more than 64 characters")
   .required("Agent name is a required field"),
   versionNumber: yup.string().matches(/^\d+$/, 'Version number must be a whole number').required("Version number is a required field"),
 });
@@ -105,7 +105,7 @@ const AgentSubmission = () => {
   return (
     <PageContainer>
       <Backdrop>
-        <FormCard component='form'>
+        <FormCard component='form' sx={{width: '350px'}}>
           
         <FormControl>
           <Box sx={{display: 'flex', flexDirection: 'row', gap: '8px'}}>
