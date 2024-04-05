@@ -66,7 +66,7 @@ const AgentLeaderboard = () => {
               key={`Agent-${agent.agentId}`}
               sx={{borderRadius: index === 0 ? '20px 20px 0 0' : index === agents.length - 1 ? '0 0 20px 20px' : '0',}}
               className={classes.LeaderboardItemContainer}>
-
+                <Typography>{`${index + 1}. `}</Typography>
                 <Typography className={classes.AgentLabel}>{agent.agentName}</Typography>
                 <Box className={classes.TeamContainer}>
                   <Typography className={classes.TeamLabel}>{agent.teamName}</Typography>
