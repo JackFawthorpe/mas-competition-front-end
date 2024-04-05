@@ -58,7 +58,7 @@ const AgentLeaderboard = () => {
   return (
     <PageContainer>
       <Backdrop>
-        <FormCard sx={agents.length == 0 ? {display: 'none'} : {}}>
+        <FormCard sx={agents.length === 0 ? {display: 'none'} : {}}>
           <Table sx={{width: '650px'}}>
             <TableBody>
               {agents.map((agent, index) => 
