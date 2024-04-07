@@ -2,6 +2,7 @@ import { Box, ListItem, Table, TableBody, Typography } from "@mui/material";
 import makeStyles from '@mui/styles/makeStyles';
 import { useEffect, useState } from "react";
 import { API } from "../apis/API";
+import AgentStatusPill from "../components/AgentStatusPill";
 import Backdrop from "../components/Backdrop";
 import FormCard from "../components/FormCard";
 import PageContainer from "../components/PageContainer";
@@ -15,7 +16,7 @@ const useStyles = makeStyles(() => ({
     flexDirection: 'row',
   },
   AgentLabel: {
-    width: '55%',
+    width: '30%',
   },
   TeamContainer: {
     width: '180px',
@@ -59,7 +60,7 @@ const AgentLeaderboard = () => {
     <PageContainer>
       <Backdrop>
         <FormCard sx={agents.length === 0 ? {display: 'none'} : {}}>
-          <Table sx={{width: '650px'}}>
+          <Table sx={{width: '750px'}}>
             <TableBody>
               {agents.map((agent, index) => 
               <ListItem 
@@ -68,6 +69,7 @@ const AgentLeaderboard = () => {
               className={classes.LeaderboardItemContainer}>
                 <Typography>{`${index + 1}. `}</Typography>
                 <Typography className={classes.AgentLabel}>{agent.agentName}</Typography>
+                <AgentStatusPill status={agent.status}/>
                 <Box className={classes.TeamContainer}>
                   <Typography className={classes.TeamLabel}>{agent.teamName}</Typography>
                 </Box>
