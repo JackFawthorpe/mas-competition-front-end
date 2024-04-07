@@ -19,9 +19,10 @@ api.interceptors.response.use(
       return response;
     },
     error => {
-      // If response status is 302 (redirect) then the account has been logged out
-      if (error.response && error.response.status === 302) {
+      // If response status is 401 (redirect) then the account has been logged out
+      if (error.response && error.response.status === 401) {
         LocalStorageAPI.removeItem('user');
+        window.location.href = "/";
         window.location.reload();
       }
       // Return the error
