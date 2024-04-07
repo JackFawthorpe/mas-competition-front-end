@@ -84,7 +84,7 @@ const AgentSubmission = () => {
       const parsedDate = parseISO(result.nextRound);
       const timeTill = formatDistanceToNow(parsedDate);
       queueMessage(`Successfully submitted agent\nThe next round starts in ${timeTill}`);
-			navigate("/home");
+			navigate("/agent-leaderboard");
 		} catch (error) {
       console.log(error);
       queueMessage("Invalid Agent Provided", "error");

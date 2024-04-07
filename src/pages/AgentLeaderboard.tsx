@@ -17,6 +17,7 @@ const useStyles = makeStyles(() => ({
   },
   AgentLabel: {
     width: '30%',
+    overflowWrap: 'break-word',
   },
   TeamContainer: {
     width: '180px',
