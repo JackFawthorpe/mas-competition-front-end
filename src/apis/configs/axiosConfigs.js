@@ -5,7 +5,7 @@ import { LocalStorageAPI } from "../LocalStorageAPI";
 let baseURL = "http://localhost:4300/api/v1";
 
 if (process.env.NODE_ENV === "production") {
-    baseURL = `http://132.181.18.82${process.env.PUBLIC_URL}/api/v1`;
+    baseURL = `https://132.181.18.82${process.env.PUBLIC_URL}/api/v1`;
 }
   
 export const api = axios.create({
