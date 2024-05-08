@@ -50,5 +50,12 @@ export const API = {
         const response = await api.get('/agents');
 
         return response.data;
+    },
+
+    getTeams: async(): Promise<TeamListItem[]> => {
+
+        const response = await api.get('/teams');
+
+        return response.data;
     }
 }

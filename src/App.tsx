@@ -6,6 +6,7 @@ import SnackbarProvider from './context/SnackbarProvider';
 import AgentLeaderboard from './pages/AgentLeaderboard';
 import AgentSubmission from './pages/AgentSubmission';
 import ChangePasswordPage from './pages/ChangePassword';
+import TeamLeaderboard from './pages/TeamLeaderboard';
 
 const useStyles = makeStyles(() => ({
   appContainer: {
@@ -26,6 +27,7 @@ function App() {
           <Route path={"/change-password"} element={<ChangePasswordPage/>}/>
           <Route path={"/agent-submission"} element={<AgentSubmission/>}/>
           <Route path={"/agent-leaderboard"} element={<AgentLeaderboard/>}/>
+          <Route path={"/team-leaderboard"} element={<TeamLeaderboard/>}/>
           <Route path={"/"} element={<AgentLeaderboard/>}/>
         </Routes>
       </BrowserRouter>
