@@ -1,8 +1,8 @@
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Box, IconButton, MenuItem, Tab, Tabs } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
-import { useContext, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from 'react-router-dom';
 import { API } from "../apis/API";
 import { AuthContext } from "../context/AuthContext";
 import DropdownMenu from './DropdownMenu';
@@ -43,6 +43,20 @@ const Navigation = () => {
     };
 
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  useEffect(() => {
+    const path = location.pathname;
+    if (path === '/agent-leaderboard') {
+        setTabValue(0);
+    } else if (path === '/team-leaderboard') {
+        setTabValue(1);
+    } else if (path === '/agent-submission') {
+        setTabValue(2);
+    } else {
+        setTabValue(null);
+    }
+}, [location.pathname]);
 
   return (
     <Box className={classes.navigationBar}>
